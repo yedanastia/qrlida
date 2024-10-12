@@ -20,13 +20,21 @@
     </style>
 </head>
 <body>
-    <video id="escape-video" autoplay muted playsinline>
+    <video id="escape-video" autoplay playsinline>
         <source src="cameo.mp4" type="video/mp4"> <!-- Video file named 'cameo.mp4' -->
         Your browser does not support the video tag.
     </video>
     <script>
+        const video = document.getElementById('escape-video');
+
+        // Try to unmute the video after a short delay
+        setTimeout(() => {
+            video.muted = false; // Unmute the video after loading
+            video.play(); // Play the video
+        }, 500); // Delay before unmuting
+
         // Optional: You can add a listener to check if the video fails to play
-        document.getElementById('escape-video').addEventListener('error', function() {
+        video.addEventListener('error', function() {
             alert('Video failed to load. Please check your connection.');
         });
     </script>
