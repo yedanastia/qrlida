@@ -12,30 +12,43 @@
             align-items: center;
             height: 100vh;
             background-color: #000; /* Black background for better focus on video */
+            position: relative; /* Position for overlay */
         }
         video {
             max-width: 100%;
             max-height: 100%;
         }
+        .play-button {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(255, 255, 255, 0.8);
+            border: none;
+            padding: 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            z-index: 10; /* Ensure it's above the video */
+        }
     </style>
 </head>
 <body>
-    <video id="escape-video" autoplay playsinline>
+    <video id="escape-video" muted autoplay playsinline>
         <source src="cameo.mp4" type="video/mp4"> <!-- Video file named 'cameo.mp4' -->
         Your browser does not support the video tag.
     </video>
+    <button class="play-button" id="play-button">Tap to Play Sound</button>
+
     <script>
         const video = document.getElementById('escape-video');
+        const playButton = document.getElementById('play-button');
 
-        // Try to unmute the video after a short delay
-        setTimeout(() => {
-            video.muted = false; // Unmute the video after loading
+        // Play the video when the button is clicked
+        playButton.addEventListener('click', () => {
+            video.muted = false; // Unmute the video
             video.play(); // Play the video
-        }, 500); // Delay before unmuting
-
-        // Optional: You can add a listener to check if the video fails to play
-        video.addEventListener('error', function() {
-            alert('Video failed to load. Please check your connection.');
+            playButton.style.display = 'none'; // Hide the play button after click
         });
     </script>
 </body>
