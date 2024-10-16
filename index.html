@@ -3,52 +3,48 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dharma Orientation</title>
+    <title>Escape Room Video</title>
     <style>
         body {
             margin: 0;
+            padding: 0;
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
-            background-color: #000; /* Black background for better focus on video */
-            position: relative; /* Position for overlay */
+            background-color: black;
         }
         video {
             max-width: 100%;
-            max-height: 100%;
-        }
-        .play-button {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background: rgba(255, 255, 255, 0.8);
-            border: none;
-            padding: 15px;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 16px;
-            z-index: 10; /* Ensure it's above the video */
+            height: auto;
         }
     </style>
 </head>
 <body>
-    <video id="myVideo" width="100%" controls autoplay>
-    <source src="cameo.m4v" type="video/mp4">
-    Your browser does not support the video tag.
-</video>
-    <button class="play-button" id="play-button">Tap to Hear your Brief</button>
+    <video id="myVideo" width="100%" autoplay muted playsinline>
+        <source src="cameo.m4v" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
 
     <script>
-        const video = document.getElementById('escape-video');
-        const playButton = document.getElementById('play-button');
+        const video = document.getElementById('myVideo');
 
-        // Play the video when the button is clicked
-        playButton.addEventListener('click', () => {
-            video.muted = false; // Unmute the video
-            video.play(); // Play the video
-            playButton.style.display = 'none'; // Hide the play button after click
+        // Autoplay video
+        video.muted = true;
+        video.play();
+
+        // Toggle play/pause on tap
+        video.addEventListener('click', function() {
+            if (video.paused) {
+                video.play();
+            } else {
+                video.pause();
+            }
+        });
+
+        // Unmute when user taps to interact with the video
+        video.addEventListener('play', function() {
+            video.muted = false;
         });
     </script>
 </body>
