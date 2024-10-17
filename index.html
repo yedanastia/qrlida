@@ -3,49 +3,95 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Escape Room Video</title>
+    <title>Video with Tap to Play</title>
     <style>
         body {
             margin: 0;
-            padding: 0;
+            background-color: black;
+            color: white;
+            font-family: Arial, sans-serif;
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
-            background-color: black;
         }
+
+        #video-container {
+            position: relative;
+            width: 100%;
+            max-width: 800px;
+        }
+
+        #tap-to-play {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: rgba(0, 0, 0, 0.7);
+            font-size: 24px;
+            visibility: hidden; /* Hidden by default */
+            cursor: pointer;
+        }
+
         video {
-            max-width: 100%;
+            width: 100%;
             height: auto;
         }
     </style>
 </head>
 <body>
-    <video id="myVideo" width="100%" autoplay muted playsinline>
+
+<div id="video-container">
+    <video id="myVideo" preload="auto" playsinline>
         <source src="Cameo.m4v" type="video/mp4">
         Your browser does not support the video tag.
     </video>
+    <div id="tap-to-play">Tap to Play</div>
+</div>
 
-    <script>
-        const video = document.getElementById('myVideo');
+<script>
+    const video = document.getElementById('myVideo');
+    const tapToPlay = document.getElementById('tap-to-play');
 
-        // Autoplay video
-        video.muted = true;
+    // Function to show the "Tap to Play" message
+    function showTapToPlay() {
+        tapToPlay.style.visibility = 'visible';
+    }
+
+    // Function to hide the "Tap to Play" message
+    function hideTapToPlay() {
+        tapToPlay.style.visibility = 'hidden';
+    }
+
+    // Show the message initially
+    showTapToPlay();
+
+    // Add event listeners for the video
+    video.addEventListener('pause', showTapToPlay);
+    video.addEventListener('play', hideTapToPlay);
+    video.addEventListener('ended', showTapToPlay);
+
+    // Add click event listener to the overlay
+    tapToPlay.addEventListener('click', () => {
         video.play();
+        hideTapToPlay(); // Hide the message when the video starts playing
+    });
 
-        // Toggle play/pause on tap
-        video.addEventListener('click', function() {
-            if (video.paused) {
-                video.play();
-            } else {
-                video.pause();
-            }
-        });
+    // Also handle tapping on the video itself to pause or play
+    video.addEventListener('click', () => {
+        if (video.paused) {
+            video.play();
+            hideTapToPlay();
+        } else {
+            video.pause();
+            showTapToPlay();
+        }
+    });
+</script>
 
-        // Unmute when user taps to interact with the video
-        video.addEventListener('play', function() {
-            video.muted = false;
-        });
-    </script>
 </body>
 </html>
