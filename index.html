@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Video with Tap to Play Full Screen</title>
+    <title>Video with Tap to Play</title>
     <style>
         html, body {
             margin: 0;
@@ -48,11 +48,11 @@
 <body>
 
 <div id="video-container">
-    <video id="myVideo" playsinline webkit-playsinline>
+    <video id="myVideo" controls playsinline>
         <source src="Cameo.m4v" type="video/mp4">
         Your browser does not support the video tag.
     </video>
-    <div id="tap-to-play">Tap to Play Full Screen</div>
+    <div id="tap-to-play">Tap to Play</div>
 </div>
 
 <script>
@@ -81,11 +81,6 @@
     tapToPlay.addEventListener('click', () => {
         video.play();
         hideTapToPlay(); // Hide the message when the video starts playing
-        if (video.requestFullscreen) {
-            video.requestFullscreen();
-        } else if (video.webkitRequestFullscreen) { // Safari
-            video.webkitRequestFullscreen();
-        }
     });
 
     // Also handle tapping on the video itself to pause or play
@@ -93,11 +88,6 @@
         if (video.paused) {
             video.play();
             hideTapToPlay();
-            if (video.requestFullscreen) {
-                video.requestFullscreen();
-            } else if (video.webkitRequestFullscreen) { // Safari
-                video.webkitRequestFullscreen();
-            }
         } else {
             video.pause();
             showTapToPlay();
