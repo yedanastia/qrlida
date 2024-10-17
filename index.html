@@ -5,21 +5,28 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Video with Tap to Play</title>
     <style>
-        body {
+        html, body {
             margin: 0;
-            background-color: black;
-            color: white;
-            font-family: Arial, sans-serif;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
+            height: 100%;
+            overflow: hidden; /* Prevent scrolling */
         }
 
         #video-container {
             position: relative;
-            width: 100%;
-            max-width: 800px;
+            width: 100vw; /* Full viewport width */
+            height: 100vh; /* Full viewport height */
+            overflow: hidden; /* Prevent overflow */
+        }
+
+        video {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            min-width: 100%;
+            min-height: 100%;
+            width: auto;
+            height: auto;
+            transform: translate(-50%, -50%); /* Center the video */
         }
 
         #tap-to-play {
@@ -35,11 +42,6 @@
             font-size: 24px;
             visibility: hidden; /* Hidden by default */
             cursor: pointer;
-        }
-
-        video {
-            width: 100%;
-            height: auto;
         }
     </style>
 </head>
